@@ -14,78 +14,55 @@ $(document).ready(function(){
 
 // ---------------------------------------------------
 	// List of Variables
-	// var game = 
 	var answer = Math.floor(Math.random()*10)+1;
 		console.log("The answer is " + answer);
 	var numberOfGuesses = 0;
 	var distance = null;
-	var previousDistance = null;
-
-	function game() {
-	    $("#new").click(function (event) {
-	        // event.preventDefault();
-	        answer = Math.floor((Math.random() * 100) + 1);
-	        	console.log(answer);
-			numberOfGuesses = 0;
-	        guesses = [];
-	        distance = null;
-	        previousDistance = null;
-	        $("#guess").val(''); 
-	    });
-	}
-
-
-	// $(".game").function getRandomInt() {
- //  		return answer;
-	// }
-
-	$("#guessButton").click(processGuess); 
-
-	function processGuess() {
-		var guess = $("#userGuess").val();
-		var numberGuess = parseInt(guess, 10);
-		if (numberGuess > answer) {
-			alert("You're hot. Try again.")
-		}
-		if (numberGuess < answer) {
-			alert("You're cold. Try again.")
-		}
-		else if (numberGuess == answer) {
-			alert("YOU'RE CORRECT! Way to go! Choose NEW GAME to play again.")
-		}
-		$("#count").html(++numberOfGuesses);
-		$("#guessList").append('<p>' + guess + '</p>');
-
-	}
-
-
-
-	// function getGuess() {
-	// 	$("#guessButton").click(game);
-	// 	$("#userGuess").keydown(function (enter) {
-	// 		if (enter.keyCode == 13) {
-	// 			game();
-	// 		}
-	// 	});
-	// }
-
-	// $("guessList").append(function) {
-	// 	if ("#userGuess" > answer);
-	// 		return "Your answer is too high";
-	// 	if ("#userGuess" < answer);
-	// 		return "Your answer is too low";
-	// 	else if ("#userGuess" == answer);
-	// 		return "You're Right! Nice job!";
-	// }
-
-
-
-
-	// getGuess();
 
 	
+    $(".new").click(function (event) {
+        answer = Math.floor((Math.random() * 100) + 1);
+        	console.log(answer);
+		numberOfGuesses = 0;
+        distance = null;
+        $("#userGuess").val(''); 
+        numberOfGuesses = 0
+        $("#count").html(numberOfGuesses);
+        $("#guessList").html('');
 
+    });
+	
 
+	$("#guessButton").click(processGuess); 
+		function processGuess() {
+			var guess = $("#userGuess").val();
+			var numberGuess = parseInt(guess, 10);
+			distance = Math.abs(numberGuess - answer);
+
+			if (distance > 0 && distance <= 10) {
+				alert("You're getting hot. Try again.")
+			}
+			else if (distance >= 11 && distance <=20) {
+				alert("You're getting warm. Try again.")
+			}
+			else if (distance >=21 && distance <=30) {
+				alert("You're getting cold. Try again.")
+			}
+			else if (distance >=31) {
+				alert("You've landed in Antartica! Send for help.")
+			}
+			else if (distance == 0) {
+				alert("YOU'RE CORRECT! Way to go! Choose NEW GAME to play again.")
+			}
+			$("#count").html(++numberOfGuesses);
+			$("#guessList").append('<p>' + guess + '</p>');
+	}
+	
+	$("#userGuess").keypress(function(event) {
+		if (event.keyCode === 13) {
+			processGuess();
+		}
+	});
 
 });
 
